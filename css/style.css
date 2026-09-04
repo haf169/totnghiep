@@ -1,0 +1,1514 @@
+/* ==========================================================================
+   WEBSITE THIỆP MỜI TỐT NGHIỆP - NGUYỄN HỮU TRẦN HÀ
+   FPT UNIVERSITY - SOFTWARE ENGINEER (MSSV: DE170229)
+   DESIGN STYLE: SWISS INTERNATIONAL (INTERNATIONAL TYPOGRAPHIC STYLE)
+   TRIẾT LÝ: CỰC KỲ KHÁCH QUAN, TOÁN HỌC, CHÍNH XÁC, PHẲNG & ĐỎ THỤY SĨ (#FF3000)
+   ========================================================================== */
+
+/* --- 1. DESIGN TOKENS (SWISS DNA) --- */
+:root {
+  /* Strict Palette */
+  --bg-white: #FFFFFF;        /* Pure White */
+  --text-black: #000000;      /* Pure Black */
+  --bg-muted: #F2F2F2;        /* Light Gray */
+  --bg-dark: #000000;         /* Solid Black */
+  --swiss-red: #FF3000;       /* The Signal Red (Đỏ Thụy Sĩ độc tôn) */
+  --swiss-red-hover: #E02A00;
+  --border-black: #000000;    /* Visible structural border */
+  --border-muted: #E5E5E5;
+
+  /* Strict Geometry */
+  --radius-none: 0px;
+
+  /* Typography: Neutral Grotesque Sans-Serif */
+  --font-swiss: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Fast Mechanical Transitions */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 200ms ease-out;
+}
+
+/* --- 2. RESET & BASE --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important; /* Tuyệt đối không bo tròn (0px radius) */
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-white);
+  color: var(--text-black);
+}
+
+body.swiss-theme {
+  font-family: var(--font-swiss);
+  background-color: var(--bg-white);
+  color: var(--text-black);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Texture vân giấy Thụy Sĩ mờ nhẹ 1.5% (.swiss-noise) */
+body.swiss-theme::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- 3. PATTERNS KIẾN TRÚC THỤY SĨ (TEXTURE PATTERNS) --- */
+/* Lưới 24x24px (.swiss-grid-pattern) */
+.swiss-grid-pattern {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Ma trận chấm 16x16px (.swiss-dots) */
+.swiss-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* Vạch chéo 45 độ (.swiss-diagonal) */
+.swiss-diagonal {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.025),
+    rgba(0, 0, 0, 0.025) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-swiss);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: var(--text-black);
+}
+
+p, span, label, input, textarea, select {
+  font-family: var(--font-swiss);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- 4. PRELOADER (SWISS BAUHAUS MINIMAL) --- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-white);
+  border: 12px solid var(--text-black);
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-box {
+  max-width: 440px;
+  width: 90%;
+  padding: 30px;
+  border: 4px solid var(--text-black);
+  background-color: var(--bg-white);
+}
+
+.preloader-swiss-badge {
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--swiss-red);
+  margin-bottom: 8px;
+}
+
+.preloader-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.preloader-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-muted);
+  border: 2px solid var(--text-black);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.preloader-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: var(--swiss-red);
+  transition: width 0.2s ease-out;
+}
+
+.preloader-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-black);
+}
+
+/* --- 5. TOP NAVIGATION (SWISS STRUCTURE) --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-white);
+  border-bottom: 4px solid var(--border-black);
+}
+
+.nav-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-signal-box {
+  width: 14px;
+  height: 14px;
+  background-color: var(--swiss-red);
+}
+
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--text-black);
+}
+
+.brand-sub {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #666666;
+  border-left: 2px solid var(--text-black);
+  padding-left: 10px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Swiss Primary Button: Black -> Red on Hover */
+.btn-swiss-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 28px;
+  background-color: var(--text-black);
+  color: var(--bg-white) !important;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border: 2px solid var(--text-black);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-swiss-primary:hover {
+  background-color: var(--swiss-red);
+  border-color: var(--swiss-red);
+  color: var(--bg-white) !important;
+}
+
+/* Swiss Secondary Button: White -> Black on Hover */
+.btn-swiss-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 24px;
+  background-color: var(--bg-white);
+  color: var(--text-black);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  border: 2px solid var(--text-black);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-swiss-secondary:hover {
+  background-color: var(--text-black);
+  color: var(--bg-white);
+}
+
+/* --- 6. PAGE CONTAINER & SECTIONS --- */
+.page-container {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 40px 32px 100px;
+  position: relative;
+}
+
+.section-swiss {
+  border: 4px solid var(--text-black);
+  background-color: var(--bg-white);
+  margin-bottom: 60px;
+}
+
+.section-swiss-header {
+  padding: 24px 32px;
+  border-bottom: 4px solid var(--text-black);
+  background-color: var(--bg-muted);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.section-swiss-num {
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--swiss-red);
+}
+
+.section-swiss-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* --- 7. HERO SECTION (01. COMMENCEMENT) --- */
+.hero-swiss-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: stretch;
+}
+
+.hero-swiss-content {
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 4px solid var(--text-black);
+}
+
+.hero-pre-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--swiss-red);
+  margin-bottom: 24px;
+}
+
+.hero-pre-label::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--swiss-red);
+}
+
+.hero-main-name {
+  font-size: 5.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+/* Swiss Data Spec Table */
+.swiss-specs-table {
+  width: 100%;
+  border-top: 2px solid var(--text-black);
+  border-bottom: 2px solid var(--text-black);
+  margin-bottom: 36px;
+  background-color: var(--bg-white);
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  border-bottom: 1px solid var(--border-black);
+  padding: 12px 0;
+  align-items: center;
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-key {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #666666;
+}
+
+.spec-val {
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-black);
+}
+
+.spec-val.red-text {
+  color: var(--swiss-red);
+}
+
+.hero-objective-lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--text-black);
+  margin-bottom: 40px;
+  max-width: 650px;
+  border-left: 4px solid var(--swiss-red);
+  padding-left: 16px;
+}
+
+.hero-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Hero Portrait Frame (Right Column) */
+.hero-swiss-visual {
+  position: relative;
+  background-color: var(--bg-muted);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-visual-header {
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--text-black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+
+.visual-index-label {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--swiss-red);
+}
+
+.visual-cap-btn {
+  background-color: var(--text-black);
+  color: #FFFFFF;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.visual-cap-btn:hover {
+  background-color: var(--swiss-red);
+}
+
+.hero-portrait-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.hero-swiss-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.hero-portrait-container:hover .hero-swiss-img {
+  transform: scale(1.03);
+}
+
+.hero-corner-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: var(--text-black);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+/* --- 8. COUNTDOWN SECTION (02. COUNTDOWN) --- */
+.countdown-swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: var(--text-black);
+  gap: 2px;
+  border-bottom: 4px solid var(--text-black);
+}
+
+.count-swiss-cell {
+  background-color: var(--bg-white);
+  padding: 40px 24px;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.count-swiss-cell:hover {
+  background-color: var(--bg-muted);
+}
+
+.count-cell-index {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: var(--swiss-red);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.count-giant-number {
+  font-size: 4.8rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-black);
+}
+
+.count-giant-number.highlight-red {
+  color: var(--swiss-red);
+}
+
+.count-unit-name {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #555555;
+}
+
+.countdown-footer-bar {
+  padding: 24px 32px;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.countdown-note {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.calendar-swiss-btns {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* --- 9. PORTFOLIO LOOKBOOK SECTION (03. PORTFOLIO) --- */
+.portfolio-swiss-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  background-color: var(--text-black);
+  padding: 4px;
+}
+
+.portfolio-swiss-card {
+  position: relative;
+  background-color: var(--bg-white);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid var(--text-black);
+  transition: border-color var(--transition-fast);
+}
+
+.portfolio-swiss-card:hover {
+  border-color: var(--swiss-red);
+}
+
+/* Bố cục lưới bất đối xứng 12 cột */
+.port-card-1 { grid-column: span 6; } /* Ảnh lớn 1 */
+.port-card-2 { grid-column: span 6; } /* Ảnh lớn 2 */
+.port-card-3 { grid-column: span 4; } /* Ảnh 3 */
+.port-card-4 { grid-column: span 4; } /* Ảnh 4 */
+.port-card-5 { grid-column: span 4; } /* Ảnh 5 */
+.port-card-6 { grid-column: span 12; } /* Ảnh toàn cảnh 6 */
+
+.port-card-1 .port-img-wrap,
+.port-card-2 .port-img-wrap {
+  aspect-ratio: 4 / 5;
+}
+
+.port-card-3 .port-img-wrap,
+.port-card-4 .port-img-wrap,
+.port-card-5 .port-img-wrap {
+  aspect-ratio: 3 / 4;
+}
+
+.port-card-6 .port-img-wrap {
+  aspect-ratio: 16 / 8;
+}
+
+.port-img-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-muted);
+}
+
+.port-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.portfolio-swiss-card:hover .port-img {
+  transform: scale(1.03);
+}
+
+.port-index-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--text-black);
+  color: var(--swiss-red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  padding: 6px 12px;
+  z-index: 5;
+}
+
+.port-zoom-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--text-black);
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 6px 12px;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  z-index: 5;
+}
+
+.portfolio-swiss-card:hover .port-zoom-badge {
+  opacity: 1;
+  background-color: var(--swiss-red);
+}
+
+/* --- 10. VENUE & CONTACT SECTION (04. VENUE & CONTACT) --- */
+.venue-swiss-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.venue-swiss-info {
+  padding: 40px;
+  border-right: 4px solid var(--text-black);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.venue-spec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.venue-spec-block {
+  border-left: 4px solid var(--text-black);
+  padding-left: 16px;
+}
+
+.venue-spec-block.highlight {
+  border-left-color: var(--swiss-red);
+}
+
+.venue-label {
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--swiss-red);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.venue-value-main {
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.venue-value-sub {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #444444;
+}
+
+/* Contact Blocks (Trần Hà & Trung Nguyên) */
+.contact-swiss-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.contact-swiss-box {
+  background-color: var(--bg-muted);
+  border: 2px solid var(--text-black);
+  padding: 16px;
+}
+
+.contact-swiss-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.contact-btn-pair {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-phone-call {
+  flex: 1;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--text-black);
+  color: #FFFFFF !important;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-phone-call:hover {
+  background-color: var(--swiss-red);
+}
+
+.btn-phone-zalo {
+  height: 38px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  color: var(--text-black);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 2px solid var(--text-black);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-phone-zalo:hover {
+  background-color: var(--text-black);
+  color: #FFFFFF;
+}
+
+/* Embedded Map Frame */
+.venue-swiss-map-wrap {
+  position: relative;
+  background-color: var(--bg-muted);
+  min-height: 400px;
+}
+
+.venue-swiss-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  border: none;
+  display: block;
+}
+
+/* Route Strip */
+.route-swiss-panel {
+  border-top: 4px solid var(--text-black);
+  padding: 24px 32px;
+  background-color: var(--bg-muted);
+}
+
+.route-swiss-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+
+.route-canvas {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.route-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dashed-path {
+  stroke: var(--text-black);
+  stroke-width: 3;
+  stroke-dasharray: 8 8;
+  fill: none;
+  animation: dashMove 20s linear infinite;
+}
+
+.landmark-start, .landmark-end {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.landmark-dot {
+  font-size: 1.5rem;
+}
+
+.landmark-txt {
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.route-traveler {
+  position: absolute;
+  z-index: 3;
+  font-size: 1.6rem;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+/* --- 11. RSVP ATTENDANCE SECTION (05. ATTENDANCE) --- */
+.rsvp-swiss-body {
+  padding: 48px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rsvp-swiss-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-swiss-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-swiss-label {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-black);
+}
+
+.form-swiss-label .req {
+  color: var(--swiss-red);
+}
+
+.input-swiss-box {
+  width: 100%;
+  height: 52px;
+  background-color: var(--bg-white);
+  border: 2px solid var(--text-black);
+  padding: 0 18px;
+  font-family: var(--font-swiss);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-black);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.input-swiss-box:focus {
+  border-color: var(--swiss-red);
+  background-color: #FFFFFF;
+}
+
+.textarea-swiss-box {
+  width: 100%;
+  background-color: var(--bg-white);
+  border: 2px solid var(--text-black);
+  padding: 14px 18px;
+  font-family: var(--font-swiss);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-black);
+  min-height: 100px;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea-swiss-box:focus {
+  border-color: var(--swiss-red);
+}
+
+/* Segmented Radio Options */
+.attendance-swiss-radios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background-color: var(--text-black);
+  border: 2px solid var(--text-black);
+}
+
+.att-radio-label {
+  position: relative;
+  background-color: var(--bg-white);
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color var(--transition-fast);
+}
+
+.att-radio-label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.att-radio-text {
+  font-size: 0.85rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-black);
+}
+
+.att-radio-label:has(input[type="radio"]:checked) {
+  background-color: var(--text-black);
+}
+
+.att-radio-label:has(input[type="radio"]:checked) .att-radio-text {
+  color: var(--swiss-red);
+}
+
+/* Khung Mã QR Chúc Mừng Từ Xa */
+.qr-swiss-frame {
+  border: 4px solid var(--swiss-red);
+  background-color: var(--bg-white);
+  padding: 32px 24px;
+  text-align: center;
+  margin-top: 12px;
+  animation: qrSnapIn 0.2s ease-out;
+}
+
+@keyframes qrSnapIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.qr-swiss-header-tag {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--swiss-red);
+  margin-bottom: 6px;
+}
+
+.qr-swiss-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.qr-swiss-desc {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 20px;
+}
+
+.qr-swiss-img-wrap {
+  display: inline-block;
+  padding: 10px;
+  background-color: #FFFFFF;
+  border: 3px solid var(--text-black);
+  margin-bottom: 14px;
+}
+
+.qr-swiss-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  display: block;
+}
+
+.qr-swiss-name {
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.qr-swiss-sub {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666666;
+}
+
+/* Emoji Bar */
+.emoji-swiss-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.emoji-swiss-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #666666;
+}
+
+.emoji-swiss-btn {
+  background-color: var(--bg-muted);
+  border: 2px solid var(--text-black);
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.emoji-swiss-btn:hover {
+  background-color: var(--swiss-red);
+  border-color: var(--swiss-red);
+}
+
+.btn-submit-large {
+  height: 56px;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+}
+
+.rsvp-privacy-note {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #666666;
+}
+
+/* --- 12. FOOTER & COLOPHON (06. COLOPHON) --- */
+.footer-swiss-body {
+  padding: 48px 40px;
+  text-align: center;
+  background-color: var(--bg-white);
+}
+
+.footer-huge-name {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footer-quote-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  max-width: 680px;
+  margin: 0 auto 36px;
+  line-height: 1.5;
+}
+
+.footer-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.footer-hotline-strip {
+  padding: 16px 24px;
+  background-color: var(--bg-muted);
+  border: 2px solid var(--text-black);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 36px;
+}
+
+.footer-phone-link {
+  color: var(--text-black);
+  transition: color var(--transition-fast);
+}
+
+.footer-phone-link:hover {
+  color: var(--swiss-red);
+}
+
+.footer-bottom-copy {
+  border-top: 2px solid var(--text-black);
+  padding-top: 20px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #666666;
+}
+
+/* --- 13. LIGHTBOX MODAL (SWISS GALLERY VIEW) --- */
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.94);
+}
+
+.lightbox-container {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 94vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+.lightbox-img-box {
+  max-width: 82vw;
+  max-height: 74vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 4px solid #FFFFFF;
+  background-color: #000000;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 74vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-bar {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  background-color: #000000;
+  border: 2px solid #FFFFFF;
+}
+
+.lightbox-author {
+  font-size: 0.95rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #FFFFFF;
+}
+
+.lightbox-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lightbox-counter {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--swiss-red);
+  letter-spacing: 0.1em;
+}
+
+.lightbox-download-link {
+  background-color: var(--swiss-red);
+  color: #FFFFFF !important;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color var(--transition-fast);
+}
+
+.lightbox-download-link:hover {
+  background-color: #FFFFFF;
+  color: #000000 !important;
+}
+
+.lightbox-close-btn {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
+  background-color: #000000;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color var(--transition-fast);
+}
+
+.lightbox-close-btn:hover {
+  background-color: var(--swiss-red);
+  border-color: var(--swiss-red);
+}
+
+.lightbox-nav-btn {
+  width: 48px;
+  height: 48px;
+  background-color: #000000;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 16px;
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast);
+}
+
+.lightbox-nav-btn:hover {
+  background-color: var(--swiss-red);
+  border-color: var(--swiss-red);
+}
+
+/* --- 14. SUCCESS MODAL & TOAST --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-box {
+  background-color: var(--bg-white);
+  border: 6px solid var(--text-black);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-cap-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.modal-msg {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.toast-popup {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background-color: var(--text-black);
+  color: #FFFFFF;
+  border: 2px solid var(--swiss-red);
+  padding: 12px 28px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  z-index: 100005;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+}
+
+.toast-popup.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- 15. RESPONSIVE (SWISS SCALE) --- */
+@media (max-width: 1024px) {
+  .hero-swiss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-swiss-content {
+    border-right: none;
+    border-bottom: 4px solid var(--text-black);
+  }
+
+  .hero-main-name {
+    font-size: 4rem;
+  }
+
+  .venue-swiss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .venue-swiss-info {
+    border-right: none;
+    border-bottom: 4px solid var(--text-black);
+  }
+
+  .port-card-1, .port-card-2 {
+    grid-column: span 12;
+  }
+
+  .port-card-3, .port-card-4, .port-card-5 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 20px 16px 60px;
+  }
+
+  .section-swiss {
+    border-width: 3px;
+    margin-bottom: 40px;
+  }
+
+  .section-swiss-header {
+    padding: 16px 20px;
+    border-bottom-width: 3px;
+  }
+
+  .hero-swiss-content {
+    padding: 28px 20px;
+    border-bottom-width: 3px;
+  }
+
+  .hero-main-name {
+    font-size: 3rem;
+  }
+
+  .spec-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .countdown-swiss-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .count-giant-number {
+    font-size: 3.2rem;
+  }
+
+  .count-swiss-cell {
+    padding: 24px 16px;
+  }
+
+  .port-card-3, .port-card-4, .port-card-5 {
+    grid-column: span 12;
+  }
+
+  .venue-swiss-info {
+    padding: 24px 20px;
+    border-bottom-width: 3px;
+  }
+
+  .contact-swiss-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rsvp-swiss-body {
+    padding: 28px 16px;
+  }
+
+  .attendance-swiss-radios {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-nav-btn {
+    width: 36px;
+    height: 36px;
+    margin: 0 6px;
+  }
+}
