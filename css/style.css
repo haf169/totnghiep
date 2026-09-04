@@ -1412,6 +1412,13 @@ a {
 }
 
 /* --- 15. RESPONSIVE (SWISS SCALE) --- */
+
+/* Bỏ viền highlight xám khi chạm trên điện thoại */
+button, a, input, label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* TABLET & SMALL LAPTOPS (<= 1024px) */
 @media (max-width: 1024px) {
   .hero-swiss-grid {
     grid-template-columns: 1fr;
@@ -1444,33 +1451,53 @@ a {
   }
 }
 
+/* PHONES & TABLETS (<= 768px) */
 @media (max-width: 768px) {
+  .nav-inner {
+    padding: 12px 18px;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
   .page-container {
-    padding: 20px 16px 60px;
+    padding: 16px 12px 60px;
   }
 
   .section-swiss {
     border-width: 3px;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .section-swiss-header {
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-bottom-width: 3px;
   }
 
+  .section-swiss-title {
+    font-size: 1.6rem;
+  }
+
   .hero-swiss-content {
-    padding: 28px 20px;
+    padding: 24px 18px;
     border-bottom-width: 3px;
   }
 
   .hero-main-name {
-    font-size: 3rem;
+    font-size: 3.2rem;
+    margin-bottom: 24px;
   }
 
   .spec-row {
     grid-template-columns: 1fr;
+    padding: 8px 0;
     gap: 2px;
+  }
+
+  .hero-objective-lead {
+    font-size: 1rem;
+    margin-bottom: 28px;
   }
 
   .countdown-swiss-grid {
@@ -1485,30 +1512,421 @@ a {
     padding: 24px 16px;
   }
 
-  .port-card-3, .port-card-4, .port-card-5 {
+  .countdown-footer-bar {
+    padding: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 14px;
+  }
+
+  .calendar-swiss-btns {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .calendar-swiss-btns button {
+    width: 100%;
+  }
+
+  .portfolio-swiss-grid {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .port-card-1, .port-card-2, .port-card-3, .port-card-4, .port-card-5, .port-card-6 {
     grid-column: span 12;
   }
 
+  .port-card-1 .port-img-wrap,
+  .port-card-2 .port-img-wrap,
+  .port-card-3 .port-img-wrap,
+  .port-card-4 .port-img-wrap,
+  .port-card-5 .port-img-wrap {
+    aspect-ratio: 4 / 5;
+  }
+
+  .port-card-6 .port-img-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  .port-zoom-badge {
+    opacity: 0.95; /* Luôn hiển thị trên màn hình cảm ứng */
+  }
+
   .venue-swiss-info {
-    padding: 24px 20px;
+    padding: 24px 18px;
     border-bottom-width: 3px;
+  }
+
+  .venue-value-main {
+    font-size: 1.25rem;
   }
 
   .contact-swiss-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .route-swiss-panel {
+    padding: 16px 18px;
   }
 
   .rsvp-swiss-body {
-    padding: 28px 16px;
+    padding: 28px 18px;
   }
 
   .attendance-swiss-radios {
     grid-template-columns: 1fr;
   }
 
+  .footer-swiss-body {
+    padding: 32px 18px;
+  }
+
+  .footer-huge-name {
+    font-size: 2rem;
+  }
+
+  .footer-actions-row {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .footer-actions-row button {
+    width: 100%;
+  }
+
+  .footer-hotline-strip {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+    padding: 14px;
+  }
+
+  /* Lightbox Mobile Layout */
+  .lightbox-container {
+    flex-direction: column;
+    max-width: 96vw;
+    width: 100%;
+  }
+
+  .lightbox-main {
+    width: 100%;
+  }
+
+  .lightbox-img-box {
+    max-width: 94vw;
+    max-height: 60vh;
+  }
+
   .lightbox-nav-btn {
-    width: 36px;
-    height: 36px;
-    margin: 0 6px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .lightbox-nav-btn.prev {
+    left: 8px;
+  }
+
+  .lightbox-nav-btn.next {
+    right: 8px;
+  }
+
+  .lightbox-bar {
+    max-width: 94vw;
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .lightbox-author {
+    font-size: 0.82rem;
+  }
+}
+
+/* SMARTPHONES (<= 480px - iPhone, Samsung, Xiaomi) */
+@media (max-width: 480px) {
+  .site-header {
+    border-bottom-width: 3px;
+  }
+
+  .nav-inner {
+    padding: 10px 14px;
+  }
+
+  .brand-title {
+    font-size: 0.95rem;
+  }
+
+  .btn-swiss-primary {
+    height: 40px;
+    padding: 0 16px;
+    font-size: 0.72rem;
+  }
+
+  .btn-swiss-secondary {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 0.72rem;
+  }
+
+  .page-container {
+    padding: 12px 10px 48px;
+  }
+
+  .section-swiss {
+    border-width: 2px;
+    margin-bottom: 28px;
+  }
+
+  .section-swiss-header {
+    padding: 12px 14px;
+    border-bottom-width: 2px;
+  }
+
+  .section-swiss-num {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+  }
+
+  .section-swiss-title {
+    font-size: 1.35rem;
+  }
+
+  .hero-swiss-content {
+    padding: 20px 14px;
+    border-bottom-width: 2px;
+  }
+
+  .hero-pre-label {
+    font-size: 0.68rem;
+    margin-bottom: 16px;
+  }
+
+  .hero-main-name {
+    font-size: 2.35rem;
+    line-height: 0.95;
+    margin-bottom: 20px;
+    word-break: break-word;
+  }
+
+  .swiss-specs-table {
+    margin-bottom: 24px;
+  }
+
+  .spec-key {
+    font-size: 0.65rem;
+  }
+
+  .spec-val {
+    font-size: 0.88rem;
+  }
+
+  .hero-objective-lead {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    padding-left: 12px;
+    border-left-width: 3px;
+  }
+
+  .hero-actions-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .hero-actions-group .btn-swiss-primary,
+  .hero-actions-group .btn-swiss-secondary {
+    width: 100%;
+    height: 46px;
+  }
+
+  .hero-portrait-container {
+    min-height: 360px;
+    max-height: 440px;
+  }
+
+  .countdown-swiss-grid {
+    border-bottom-width: 2px;
+  }
+
+  .count-swiss-cell {
+    padding: 18px 12px;
+  }
+
+  .count-cell-index {
+    font-size: 0.65rem;
+  }
+
+  .count-giant-number {
+    font-size: 2.5rem;
+  }
+
+  .count-unit-name {
+    font-size: 0.68rem;
+  }
+
+  .countdown-note {
+    font-size: 0.75rem;
+  }
+
+  .venue-swiss-info {
+    padding: 20px 14px;
+    border-bottom-width: 2px;
+  }
+
+  .venue-value-main {
+    font-size: 1.15rem;
+  }
+
+  .venue-value-sub {
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .btn-phone-call, .btn-phone-zalo {
+    height: 42px;
+    font-size: 0.72rem;
+  }
+
+  .venue-swiss-info .btn-swiss-primary {
+    width: 100%;
+    height: 44px;
+  }
+
+  .venue-swiss-map-wrap {
+    min-height: 260px;
+  }
+
+  .venue-swiss-map-wrap iframe {
+    min-height: 260px;
+  }
+
+  .route-swiss-panel {
+    border-top-width: 2px;
+    padding: 14px 12px;
+  }
+
+  .route-canvas {
+    height: 60px;
+  }
+
+  .route-traveler {
+    font-size: 1.3rem;
+  }
+
+  .landmark-dot {
+    font-size: 1.2rem;
+  }
+
+  .landmark-txt {
+    font-size: 0.65rem;
+  }
+
+  /* Form RSVP trên mobile: Chống tự động phóng to của iOS Safari */
+  .rsvp-swiss-body {
+    padding: 20px 14px;
+  }
+
+  .input-swiss-box {
+    height: 48px;
+    font-size: 16px; /* Bắt buộc >= 16px để iOS không zoom lố */
+    padding: 0 14px;
+  }
+
+  .textarea-swiss-box {
+    font-size: 16px; /* Bắt buộc >= 16px */
+    padding: 12px 14px;
+  }
+
+  .attendance-swiss-radios {
+    border-width: 2px;
+  }
+
+  .att-radio-label {
+    padding: 14px;
+  }
+
+  .att-radio-text {
+    font-size: 0.78rem;
+  }
+
+  .qr-swiss-frame {
+    padding: 20px 14px;
+    border-width: 3px;
+  }
+
+  .qr-swiss-title {
+    font-size: 1.25rem;
+  }
+
+  .qr-swiss-img {
+    width: 170px;
+    height: 170px;
+  }
+
+  .emoji-swiss-row {
+    gap: 6px;
+  }
+
+  .emoji-swiss-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .btn-submit-large {
+    height: 50px;
+    font-size: 0.82rem;
+  }
+
+  .footer-swiss-body {
+    padding: 24px 14px;
+  }
+
+  .footer-huge-name {
+    font-size: 1.7rem;
+  }
+
+  .footer-quote-text {
+    font-size: 0.88rem;
+    margin-bottom: 24px;
+  }
+
+  .footer-hotline-strip {
+    font-size: 0.78rem;
+  }
+
+  .footer-bottom-copy {
+    font-size: 0.65rem;
+  }
+
+  .preloader {
+    border-width: 6px;
+  }
+
+  .preloader-box {
+    padding: 24px 18px;
+    border-width: 3px;
+  }
+
+  .preloader-title {
+    font-size: 1.45rem;
+  }
+
+  .modal-box {
+    padding: 32px 20px;
+    border-width: 4px;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
   }
 }
