@@ -743,8 +743,8 @@ function initMicroInteractions() {
   if (googleCalBtn) {
     googleCalBtn.addEventListener("click", () => {
       const title = encodeURIComponent("🎓 Lễ Tốt Nghiệp Nguyễn Hữu Trần Hà - FPT University");
-      const details = encodeURIComponent("Lễ tốt nghiệp Tân Cử nhân Kỹ thuật Phần mềm Nguyễn Hữu Trần Hà (MSSV: DE170229). Địa điểm: Hội trường A, FPT University Đà Nẵng. Trân trọng kính mời!");
-      const location = encodeURIComponent("Hội trường A, Đại học FPT Đà Nẵng, KĐT Công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng");
+      const details = encodeURIComponent("Lễ tốt nghiệp Tân Cử nhân Kỹ thuật Phần mềm Nguyễn Hữu Trần Hà (MSSV: DE170229). Địa điểm: Sảnh dưới cầu giữa tòa Gamma và Alpha, FPT University Đà Nẵng. Trân trọng kính mời!");
+      const location = encodeURIComponent("Sảnh dưới cầu giữa tòa Gamma và Alpha, Đại học FPT Đà Nẵng, KĐT Công nghệ FPT, Ngũ Hành Sơn, Đà Nẵng");
       // 10:00 - 12:00 ngày 12/09/2026 UTC+7 -> 03:00 - 05:00 UTC
       const dates = "20260912T030000Z/20260912T050000Z";
       const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
@@ -768,7 +768,7 @@ function initMicroInteractions() {
         "DTEND:20260912T050000Z",
         "SUMMARY:Lễ Tốt Nghiệp Nguyễn Hữu Trần Hà - FPT University",
         "DESCRIPTION:Lễ tốt nghiệp Tân Cử nhân Kỹ thuật Phần mềm (DE170229). Rất mong được đón tiếp bạn!",
-        "LOCATION:Hội trường A, Đại học FPT Đà Nẵng",
+        "LOCATION:Sảnh dưới cầu giữa tòa Gamma và Alpha, Đại học FPT Đà Nẵng",
         "END:VEVENT",
         "END:VCALENDAR"
       ].join("\r\n");
